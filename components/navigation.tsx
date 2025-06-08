@@ -47,12 +47,14 @@ export function Navigation() {
                 {item.label}
               </Link>
             ))}
-            <Button 
-              className="bg-cyan-500 text-black hover:bg-cyan-400"
-              size="sm"
-            >
-              开始使用
-            </Button>
+            <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
+              <Button 
+                className="bg-cyan-500 text-black hover:bg-cyan-400"
+                size="sm"
+              >
+                立即体验
+              </Button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -97,12 +99,15 @@ export function Navigation() {
                   {item.label}
                 </Link>
               ))}
-              <Button 
-                className="bg-cyan-500 text-black hover:bg-cyan-400 w-fit"
-                size="sm"
-              >
-                开始使用
-              </Button>
+              <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer" className="w-full">
+                <Button 
+                  className="bg-cyan-500 text-black hover:bg-cyan-400 w-full"
+                  size="sm"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  立即体验
+                </Button>
+              </a>
             </div>
           </div>
         )}

@@ -14,62 +14,61 @@ import { Check, Star, Zap, Crown, Rocket } from "lucide-react"
 export default function PricingPage() {
   const pricingPlans = [
     {
-      name: "入门版",
-      description: "适合个人创业者和小团队",
-      price: "¥299",
-      originalPrice: "¥599",
+      name: "体验版",
+      description: "快速体验产品功能",
+      price: "$0.99",
+      originalPrice: null,
       icon: Zap,
       popular: false,
       features: [
-        "最多 3 个产品项目",
-        "基础用户分析",
+        "一次完整体验",
+        "基础搜索功能",
+        "产品分析报告",
         "邮件支持",
-        "数据导出功能",
-        "7天免费试用",
-        "基础模板库"
+        "24小时访问权限"
       ],
-      buttonText: "立即购买",
-      buttonVariant: "outline" as const
+      buttonText: "立即体验",
+      buttonVariant: "outline" as const,
+      buttonLink: "https://seeker.snapsnap.site/"
     },
     {
-      name: "专业版",
-      description: "适合成长中的初创公司",
-      price: "¥899",
-      originalPrice: "¥1,799",
+      name: "月度无限版",
+      description: "适合频繁使用的用户",
+      price: "$19",
+      originalPrice: null,
       icon: Star,
       popular: true,
       features: [
-        "无限产品项目",
-        "高级用户分析",
-        "AI 驱动的洞察",
+        "无限次搜索",
+        "高级AI分析",
+        "实时数据更新",
         "优先客服支持",
-        "高级数据导出",
-        "自定义报告",
-        "团队协作功能",
-        "API 访问权限"
+        "详细分析报告",
+        "API访问权限",
+        "数据导出功能"
       ],
-      buttonText: "立即购买",
-      buttonVariant: "default" as const
+      buttonText: "开始订阅",
+      buttonVariant: "default" as const,
+      buttonLink: "https://seeker.snapsnap.site/"
     },
     {
-      name: "企业版",
-      description: "适合大型团队和企业",
-      price: "¥2,999",
-      originalPrice: "¥5,999",
+      name: "积分包",
+      description: "灵活使用，按需付费",
+      price: "$10",
+      originalPrice: null,
       icon: Crown,
       popular: false,
       features: [
-        "专业版所有功能",
-        "白标解决方案",
-        "专属客户经理",
-        "定制化开发",
-        "本地部署选项",
-        "高级安全功能",
-        "无限团队成员",
-        "24/7 技术支持"
+        "100 积分 (20次搜索)",
+        "每次搜索消耗5积分",
+        "积分永不过期",
+        "基础分析功能",
+        "邮件支持",
+        "数据导出功能"
       ],
-      buttonText: "联系销售",
-      buttonVariant: "outline" as const
+      buttonText: "购买积分",
+      buttonVariant: "outline" as const,
+      buttonLink: "https://seeker.snapsnap.site/"
     }
   ]
 
@@ -82,14 +81,14 @@ export default function PricingPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <Badge className="mb-6 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
-              💰 限时优惠 50% OFF
+              🚀 灵活定价方案
             </Badge>
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               选择适合您的
-              <span className="gradient-text">定价方案</span>
+              <span className="gradient-text">使用方式</span>
             </h1>
             <p className="mb-8 text-xl text-gray-300">
-              一次性付费，终身使用。没有月费，没有隐藏费用。
+              体验版、月度订阅或积分包，满足不同使用需求。
             </p>
           </div>
         </div>
@@ -129,17 +128,11 @@ export default function PricingPage() {
                       {plan.description}
                     </CardDescription>
                     <div className="mt-6">
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-sm text-gray-400 line-through">
-                          {plan.originalPrice}
-                        </span>
-                        <Badge variant="destructive" className="text-xs">
-                          50% OFF
-                        </Badge>
-                      </div>
                       <div className="mt-2">
                         <span className="text-4xl font-bold text-white">{plan.price}</span>
-                        <span className="text-gray-400 ml-2">一次性付费</span>
+                        <span className="text-gray-400 ml-2">
+                          {plan.name === "月度无限版" ? "每月" : plan.name === "积分包" ? "100积分" : "一次体验"}
+                        </span>
                       </div>
                     </div>
                   </CardHeader>
@@ -156,17 +149,19 @@ export default function PricingPage() {
                   </CardContent>
                   
                   <CardFooter>
-                    <Button 
-                      className={`w-full ${
-                        plan.popular 
-                          ? 'bg-cyan-500 text-black hover:bg-cyan-400' 
-                          : 'border-gray-600 text-white hover:bg-gray-800'
-                      }`}
-                      variant={plan.buttonVariant}
-                      size="lg"
-                    >
-                      {plan.buttonText}
-                    </Button>
+                    <a href={plan.buttonLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                      <Button 
+                        className={`w-full ${
+                          plan.popular 
+                            ? 'bg-cyan-500 text-black hover:bg-cyan-400' 
+                            : 'border-gray-600 text-white hover:bg-gray-800'
+                        }`}
+                        variant={plan.buttonVariant}
+                        size="lg"
+                      >
+                        {plan.buttonText}
+                      </Button>
+                    </a>
                   </CardFooter>
                 </Card>
               )
@@ -192,41 +187,41 @@ export default function PricingPage() {
               <thead>
                 <tr className="border-b border-gray-700">
                   <th className="text-left py-4 px-6 text-white font-semibold">功能</th>
-                  <th className="text-center py-4 px-6 text-white font-semibold">入门版</th>
-                  <th className="text-center py-4 px-6 text-white font-semibold">专业版</th>
-                  <th className="text-center py-4 px-6 text-white font-semibold">企业版</th>
+                  <th className="text-center py-4 px-6 text-white font-semibold">体验版</th>
+                  <th className="text-center py-4 px-6 text-white font-semibold">月度无限版</th>
+                  <th className="text-center py-4 px-6 text-white font-semibold">积分包</th>
                 </tr>
               </thead>
               <tbody className="text-gray-300">
                 <tr className="border-b border-gray-800">
-                  <td className="py-4 px-6">产品项目数量</td>
-                  <td className="text-center py-4 px-6">3个</td>
+                  <td className="py-4 px-6">搜索次数</td>
+                  <td className="text-center py-4 px-6">1次</td>
                   <td className="text-center py-4 px-6">无限</td>
-                  <td className="text-center py-4 px-6">无限</td>
+                  <td className="text-center py-4 px-6">20次</td>
                 </tr>
                 <tr className="border-b border-gray-800">
-                  <td className="py-4 px-6">用户分析</td>
+                  <td className="py-4 px-6">基础分析</td>
                   <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
                   <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
                   <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-800">
-                  <td className="py-4 px-6">AI 洞察</td>
+                  <td className="py-4 px-6">高级AI分析</td>
                   <td className="text-center py-4 px-6">-</td>
                   <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
-                  <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
+                  <td className="text-center py-4 px-6">-</td>
                 </tr>
                 <tr className="border-b border-gray-800">
                   <td className="py-4 px-6">API 访问</td>
                   <td className="text-center py-4 px-6">-</td>
                   <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
-                  <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
+                  <td className="text-center py-4 px-6">-</td>
                 </tr>
                 <tr className="border-b border-gray-800">
-                  <td className="py-4 px-6">白标解决方案</td>
-                  <td className="text-center py-4 px-6">-</td>
+                  <td className="py-4 px-6">实时数据更新</td>
                   <td className="text-center py-4 px-6">-</td>
                   <td className="text-center py-4 px-6"><Check className="h-5 w-5 text-cyan-400 mx-auto" /></td>
+                  <td className="text-center py-4 px-6">-</td>
                 </tr>
               </tbody>
             </table>
@@ -246,33 +241,33 @@ export default function PricingPage() {
           <div className="mx-auto max-w-3xl space-y-6">
             <Card className="bg-gray-800/50 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-white">为什么选择一次性付费？</CardTitle>
+                <CardTitle className="text-white">积分包的积分会过期吗？</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300">
-                  我们相信简单透明的定价模式。一次性付费意味着没有月费压力，您可以按照自己的节奏使用产品。
+                  不会！购买的积分永不过期，您可以按照自己的节奏使用。每次搜索消耗5个积分。
                 </p>
               </CardContent>
             </Card>
             
             <Card className="bg-gray-800/50 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-white">是否提供退款保证？</CardTitle>
+                <CardTitle className="text-white">月度订阅可以随时取消吗？</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300">
-                  是的，我们提供 30 天无条件退款保证。如果您不满意，可以申请全额退款。
+                  是的，月度订阅可以随时取消，取消后当月仍可继续使用，下月不会再扣费。
                 </p>
               </CardContent>
             </Card>
             
             <Card className="bg-gray-800/50 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-white">可以升级套餐吗？</CardTitle>
+                <CardTitle className="text-white">体验版包含哪些功能？</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300">
-                  当然可以！您可以随时升级到更高级的套餐，只需支付差价即可。
+                  体验版提供一次完整的产品搜索体验，包括基础搜索功能和产品分析报告，有效期24小时。
                 </p>
               </CardContent>
             </Card>
@@ -286,16 +281,18 @@ export default function PricingPage() {
           <div className="mx-auto max-w-3xl text-center">
             <Rocket className="h-16 w-16 text-cyan-400 mx-auto mb-6" />
             <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
-              准备开始您的创业之旅？
+              准备开始您的产品搜索之旅？
             </h2>
             <p className="mb-8 text-xl text-gray-300">
-              选择最适合您的方案，立即开始验证您的产品想法。
+              选择最适合您的方案，立即开始体验强大的产品搜索功能。
             </p>
-            <Button size="lg" className="bg-cyan-500 text-black hover:bg-cyan-400 text-lg px-8 py-6">
-              开始 7 天免费试用
-            </Button>
+            <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="bg-cyan-500 text-black hover:bg-cyan-400 text-lg px-8 py-6">
+                立即开始体验
+              </Button>
+            </a>
             <p className="mt-4 text-sm text-gray-400">
-              无需信用卡 • 随时取消 • 30天退款保证
+              $0.99 体验版 • 月度订阅 • 积分包可选
             </p>
           </div>
         </div>
