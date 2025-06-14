@@ -5,19 +5,32 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Globe } from "lucide-react"
 
 /**
  * Navigation component for the SnapSeeker landing page
- * Provides responsive navigation with active state management
+ * Provides responsive navigation with active state management and language switching
  */
 export function Navigation() {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-
-  const navigationItems = [
+  
+  // Determine if we're on English pages
+  const isEnglish = pathname.startsWith('/en')
+  
+  // Navigation items based on language
+  const navigationItems = isEnglish ? [
+    { href: "/en", label: "Home" },
+    { href: "/en/pricing", label: "Pricing" },
+  ] : [
     { href: "/", label: "首页" },
     { href: "/pricing", label: "定价" },
   ]
+  
+  // Language toggle
+  const languageToggle = isEnglish ? 
+    { href: pathname.replace('/en', '') || '/', label: '中文' } :
+    { href: `/en${pathname}`, label: 'EN' }
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60">
@@ -47,12 +60,22 @@ export function Navigation() {
                 {item.label}
               </Link>
             ))}
+            
+            {/* Language Toggle */}
+            <Link
+              href={languageToggle.href}
+              className="flex items-center space-x-1 text-sm font-medium text-gray-300 transition-colors hover:text-cyan-400"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{languageToggle.label}</span>
+            </Link>
+            
             <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
               <Button 
                 className="bg-cyan-500 text-black hover:bg-cyan-400"
                 size="sm"
               >
-                立即体验
+                {isEnglish ? 'Try Now' : '立即体验'}
               </Button>
             </a>
           </div>
@@ -99,13 +122,24 @@ export function Navigation() {
                   {item.label}
                 </Link>
               ))}
+              
+              {/* Mobile Language Toggle */}
+              <Link
+                href={languageToggle.href}
+                className="flex items-center space-x-1 text-sm font-medium text-gray-300 transition-colors hover:text-cyan-400"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Globe className="w-4 h-4" />
+                <span>{languageToggle.label}</span>
+              </Link>
+              
               <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer" className="w-full">
                 <Button 
                   className="bg-cyan-500 text-black hover:bg-cyan-400 w-full"
                   size="sm"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  立即体验
+                  {isEnglish ? 'Try Now' : '立即体验'}
                 </Button>
               </a>
             </div>
