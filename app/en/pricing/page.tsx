@@ -1,7 +1,9 @@
 import * as React from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { SubscriptionComingSoonModal } from "@/components/ui/SubscriptionComingSoonModal"
 import { Navigation } from "@/components/navigation"
 import { Check, Star, Zap, Crown, Rocket } from "lucide-react"
 
@@ -10,6 +12,26 @@ import { Check, Star, Zap, Crown, Rocket } from "lucide-react"
  * Features different pricing tiers with one-time payment options
  */
 export default function EnglishPricingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalLink, setModalLink] = useState("")
+
+  const handleSubscriptionClick = (link: string) => {
+    setModalLink(link)
+    setIsModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+    setModalLink("")
+  }
+
+  const handleModalTry = () => {
+    if (modalLink) {
+      window.open(modalLink, "_blank", "noopener noreferrer")
+    }
+    handleModalClose()
+  }
+
   const firstRowPlans = [
     {
       name: "Trial Version",
@@ -201,7 +223,7 @@ export default function EnglishPricingPage() {
                   </CardContent>
 
                   <CardFooter className="mt-auto">
-                    <a href={plan.buttonLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                    {plan.buttonText === "Subscribe" ? (
                       <Button
                         className={`w-full ${plan.popular
                             ? 'bg-cyan-500 text-black hover:bg-cyan-400'
@@ -209,10 +231,24 @@ export default function EnglishPricingPage() {
                           }`}
                         variant={plan.buttonVariant}
                         size="lg"
+                        onClick={() => handleSubscriptionClick(plan.buttonLink)}
                       >
                         {plan.buttonText}
                       </Button>
-                    </a>
+                    ) : (
+                      <a href={plan.buttonLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                        <Button
+                          className={`w-full ${plan.popular
+                              ? 'bg-cyan-500 text-black hover:bg-cyan-400'
+                              : 'border-gray-600 text-white hover:bg-gray-800'
+                            }`}
+                          variant={plan.buttonVariant}
+                          size="lg"
+                        >
+                          {plan.buttonText}
+                        </Button>
+                      </a>
+                    )}
                   </CardFooter>
                 </Card>
               )
@@ -272,7 +308,7 @@ export default function EnglishPricingPage() {
                   </CardContent>
 
                   <CardFooter className="mt-auto">
-                    <a href={plan.buttonLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                    {plan.buttonText === "Subscribe" ? (
                       <Button
                         className={`w-full ${plan.popular
                             ? 'bg-cyan-500 text-black hover:bg-cyan-400'
@@ -280,10 +316,24 @@ export default function EnglishPricingPage() {
                           }`}
                         variant={plan.buttonVariant}
                         size="lg"
+                        onClick={() => handleSubscriptionClick(plan.buttonLink)}
                       >
                         {plan.buttonText}
                       </Button>
-                    </a>
+                    ) : (
+                      <a href={plan.buttonLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                        <Button
+                          className={`w-full ${plan.popular
+                              ? 'bg-cyan-500 text-black hover:bg-cyan-400'
+                              : 'border-gray-600 text-white hover:bg-gray-800'
+                            }`}
+                          variant={plan.buttonVariant}
+                          size="lg"
+                        >
+                          {plan.buttonText}
+                        </Button>
+                      </a>
+                    )}
                   </CardFooter>
                 </Card>
               )
@@ -513,6 +563,12 @@ export default function EnglishPricingPage() {
           </div>
         </div>
       </footer>
+
+      <SubscriptionComingSoonModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onTry={handleModalTry}
+      />
     </div>
   )
 }
