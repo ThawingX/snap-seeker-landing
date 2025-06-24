@@ -32,202 +32,227 @@ export default function EnglishHomePage() {
             <p className="mb-8 text-xl text-gray-300 sm:text-2xl">
               Transform your ideas into detailed Product Requirements Documents with AI-powered analysis and structured templates.
             </p>
-            <div className="flex flex-col gap-4 justify-center items-center sm:flex-row">
-              <Button 
-                size="lg" 
-                className="px-8 py-4 text-lg font-semibold text-black bg-white hover:bg-gray-100"
-                asChild
-              >
-                <Link href="https://seeker.snapsnap.site/" target="_blank">
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+              <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
+                <Button 
+                  size="lg" 
+                  className="px-8 py-6 w-full text-lg text-black bg-cyan-500 hover:bg-cyan-400 sm:w-auto"
+                >
                   Start Building PRD
                   <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
+                </Button>
+              </a>
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="px-8 py-4 text-lg font-semibold text-white bg-transparent border-white hover:bg-white hover:text-black"
+                className="px-8 py-6 text-lg text-white border-gray-600 hover:bg-gray-800"
                 onClick={() => {
-                  document.getElementById('demo-section')?.scrollIntoView({ behavior: 'smooth' });
+                  document.querySelector('#demo-section')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
                 Watch Demo
               </Button>
             </div>
+            
+            {/* Product Hunt Badge */}
+            <div className="flex justify-center mt-8">
+              <a 
+                href="https://www.producthunt.com/products/snapseeker?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-snapseeker" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="transition-transform hover:scale-105"
+              >
+                <img 
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=982626&theme=light&t=1750783108447" 
+                  alt="SnapSeeker - Get your MVP right, find your PMF fast. | Product Hunt" 
+                  style={{width: '250px', height: '54px'}} 
+                  width="250" 
+                  height="54" 
+                  className="rounded-lg shadow-lg"
+                />
+              </a>
+            </div>
           </div>
+        </div>
+        
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 bg-cyan-500/10" />
+          <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full blur-2xl bg-blue-500/10" />
         </div>
       </section>
 
-      {/* Value Proposition */}
-      <section className="py-20 bg-gray-900/50">
+      {/* Product Value Section */}
+      <section className="py-20 lg:py-32">
         <div className="container px-4 mx-auto">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
               Why Choose SnapSeeker?
             </h2>
-            <p className="mb-12 text-xl text-gray-300">
-              Streamline your product development process with intelligent PRD generation
+            <p className="text-xl text-gray-300">
+              We provide comprehensive idea refinement and PRD generation solutions to make your entrepreneurial journey smoother.
             </p>
           </div>
           
-          <div className="grid gap-8 md:grid-cols-3">
-            <Card className="bg-gray-800/50 border-gray-700">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <Card className="border-gray-700 bg-gray-800/50">
               <CardHeader>
-                <div className="flex justify-center items-center mb-4 w-12 h-12 bg-blue-500/10 rounded-lg">
-                  <Zap className="w-6 h-6 text-blue-400" />
+                <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-lg bg-cyan-500/10">
+                  <Zap className="w-6 h-6 text-cyan-400" />
                 </div>
-                <CardTitle className="text-white">Lightning Fast</CardTitle>
-              </CardHeader>
-              <CardContent>
+                <CardTitle className="text-white">Rapid Validation</CardTitle>
                 <CardDescription className="text-gray-300">
-                  Generate comprehensive PRDs in minutes, not days. Our AI understands your requirements and creates structured documents instantly.
+                  Help your ideas combine with competitors and market trends within minutes to derive reasonable MVP feature solutions.
                 </CardDescription>
-              </CardContent>
+              </CardHeader>
             </Card>
             
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="border-gray-700 bg-gray-800/50">
               <CardHeader>
-                <div className="flex justify-center items-center mb-4 w-12 h-12 bg-green-500/10 rounded-lg">
-                  <Target className="w-6 h-6 text-green-400" />
+                <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-lg bg-cyan-500/10">
+                  <BarChart3 className="w-6 h-6 text-cyan-400" />
                 </div>
-                <CardTitle className="text-white">Precision Focused</CardTitle>
-              </CardHeader>
-              <CardContent>
+                <CardTitle className="text-white">Deep Analysis</CardTitle>
                 <CardDescription className="text-gray-300">
-                  Every PRD is tailored to your specific needs with detailed user stories, acceptance criteria, and technical specifications.
+                  Starting from competitive research, combining demand heat and market trends, converging to the most core key points to form requirement cards.
                 </CardDescription>
-              </CardContent>
+              </CardHeader>
             </Card>
             
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="border-gray-700 bg-gray-800/50">
               <CardHeader>
-                <div className="flex justify-center items-center mb-4 w-12 h-12 bg-purple-500/10 rounded-lg">
-                  <BarChart3 className="w-6 h-6 text-purple-400" />
+                <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-lg bg-cyan-500/10">
+                  <Target className="w-6 h-6 text-cyan-400" />
                 </div>
-                <CardTitle className="text-white">Data Driven</CardTitle>
-              </CardHeader>
-              <CardContent>
+                <CardTitle className="text-white">Business Success</CardTitle>
                 <CardDescription className="text-gray-300">
-                  Built-in analytics and insights help you make informed decisions about your product features and roadmap.
+                  Provide structured PRD templates and agent context to help you quickly validate your ideas and find product-market fit.
                 </CardDescription>
-              </CardContent>
+              </CardHeader>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* User Cases */}
-      <section className="py-20">
+      {/* User Cases Section */}
+      <section className="py-20 lg:py-32 bg-gray-900/50">
         <div className="container px-4 mx-auto">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
-              Perfect for Every Team
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+              Success Stories
             </h2>
-            <p className="mb-12 text-xl text-gray-300">
-              From startups to enterprises, SnapSeeker adapts to your workflow
+            <p className="text-xl text-gray-300">
+              See how other entrepreneurs use SnapSeeker to achieve product success.
             </p>
           </div>
           
           <div className="grid gap-8 lg:grid-cols-2">
-            <div className="p-8 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-500/20">
-              <div className="flex items-center mb-4">
-                <Users className="mr-3 w-8 h-8 text-blue-400" />
-                <h3 className="text-2xl font-bold text-white">Product Managers</h3>
-              </div>
-              <p className="mb-6 text-gray-300">
-                Create detailed PRDs that align stakeholders and guide development teams with clear, actionable requirements.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="mr-2 w-5 h-5 text-green-400" />
-                  Stakeholder alignment
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="mr-2 w-5 h-5 text-green-400" />
-                  Clear acceptance criteria
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="mr-2 w-5 h-5 text-green-400" />
-                  Risk assessment
-                </li>
-              </ul>
-            </div>
+            <Card className="border-gray-700 bg-gray-800/50">
+              <CardHeader>
+                <div className="flex gap-4 items-center">
+                  <div className="flex justify-center items-center w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-white">SaaS Startup</CardTitle>
+                    <CardDescription className="text-gray-300">xxx LLC.</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="mb-4 text-gray-300">
+                  "We were in the exploration phase. After using SnapSeeker, we quickly landed our idea into an MVP prototype solution. Based on this solution, we generated prototypes, marketing stories, and project demos, distributed them on social media and distribution channels to validate the authenticity of our ideas, saving us a lot of time."
+                </p>
+                <div className="flex gap-2 items-center">
+                  <TrendingUp className="w-4 h-4 text-green-400" />
+                  <span className="text-sm text-green-400">Rapid MVP Landing</span>
+                </div>
+              </CardContent>
+            </Card>
             
-            <div className="p-8 bg-gradient-to-br from-green-500/10 to-teal-500/10 rounded-2xl border border-green-500/20">
-              <div className="flex items-center mb-4">
-                <TrendingUp className="mr-3 w-8 h-8 text-green-400" />
-                <h3 className="text-2xl font-bold text-white">Startup Founders</h3>
-              </div>
-              <p className="mb-6 text-gray-300">
-                Transform your vision into executable plans that investors and developers can understand and support.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="mr-2 w-5 h-5 text-green-400" />
-                  Investor-ready documentation
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="mr-2 w-5 h-5 text-green-400" />
-                  MVP planning
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="mr-2 w-5 h-5 text-green-400" />
-                  Market validation
-                </li>
-              </ul>
-            </div>
+            <Card className="border-gray-700 bg-gray-800/50">
+              <CardHeader>
+                <div className="flex gap-4 items-center">
+                  <div className="flex justify-center items-center w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full">
+                    <Lightbulb className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-white">Solo Company</CardTitle>
+                    <CardDescription className="text-gray-300">Independent Developer</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="mb-4 text-gray-300">
+                  "I used to try using AI to directly generate requirement documents, but there were often trust issues. After using SnapSeeker, it eliminated my lack of trust in AI-generated requirement documents. I can directly use SnapSeeker's output as the startup document for my project."
+                </p>
+                <div className="flex gap-2 items-center">
+                  <CheckCircle className="w-4 h-4 text-green-400" />
+                  <span className="text-sm text-green-400">Enhanced AI Trust</span>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Product Demo */}
-      <section id="demo-section" className="py-20 bg-gray-900/50">
+      {/* Demo Section */}
+      <section id="demo-section" className="py-20 lg:py-32">
         <div className="container px-4 mx-auto">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
-              See SnapSeeker in Action
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+              Demo Walkthrough
             </h2>
-            <p className="mb-12 text-xl text-gray-300">
-              Watch how easy it is to create professional PRDs
+            <p className="text-xl text-gray-300">
+              See how SnapSeeker helps you quickly refine ideas and generate PRDs.
             </p>
-            
-            {/* YouTube Video Embed */}
-            <div className="relative mx-auto max-w-4xl">
-              <div className="overflow-hidden relative bg-gray-800 rounded-2xl border border-gray-700 aspect-video">
-                <iframe
-                  src="https://www.youtube.com/embed/yLt7zT_yJCc"
-                  title="SnapSeeker Demo"
-                  className="w-full h-full"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </div>
+          </div>
+          
+          <div className="mx-auto max-w-4xl">
+            <div className="overflow-hidden relative bg-gray-800 rounded-lg border border-gray-700 aspect-video">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/yLt7zT_yJCc?rel=0&modestbranding=1&showinfo=0"
+                title="SnapSeeker Product Demo Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-r lg:py-32 from-cyan-500/10 to-blue-500/10">
         <div className="container px-4 mx-auto">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
-              Ready to Perfect Your Ideas?
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+              Ready to Get Started?
             </h2>
             <p className="mb-8 text-xl text-gray-300">
-              Join thousands of product teams already using SnapSeeker
+              Join thousands of successful entrepreneurs and let SnapSeeker help you quickly refine ideas and generate PRDs.
             </p>
-            <Button 
-              size="lg" 
-              className="px-8 py-4 text-lg font-semibold text-black bg-white hover:bg-gray-100"
-              asChild
-            >
-              <Link href="https://seeker.snapsnap.site/" target="_blank">
-                Start Building Your PRD
-                <ArrowRight className="ml-2 w-5 h-5" />
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+              <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
+                <Button 
+                  size="lg" 
+                  className="px-8 py-6 w-full text-lg text-black bg-cyan-500 hover:bg-cyan-400 sm:w-auto"
+                >
+                  Start Building PRD
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </a>
+              <Link href="/en/pricing">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="px-8 py-6 w-full text-lg text-white border-gray-600 hover:bg-gray-800"
+                >
+                  View Pricing Plans
+                </Button>
               </Link>
-            </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -235,18 +260,20 @@ export default function EnglishHomePage() {
       {/* Footer */}
       <footer className="py-12 border-t border-gray-800">
         <div className="container px-4 mx-auto">
-          <div className="flex flex-col justify-between items-center md:flex-row">
-            <div className="mb-4 md:mb-0">
-              <h3 className="text-xl font-bold text-white">SnapSeeker</h3>
-              <p className="text-gray-400">Perfect Your Idea, Build Your PRD Fast</p>
+          <div className="flex flex-col gap-4 justify-between items-center sm:flex-row">
+            <div className="flex items-center space-x-2">
+              <div className="flex justify-center items-center w-8 h-8 bg-cyan-500 rounded-lg">
+                <span className="text-sm font-bold text-black">S</span>
+              </div>
+              <span className="text-xl font-bold text-white">SnapSeeker</span>
             </div>
-            <div className="flex space-x-6">
-              <Link href="/en/pricing" className="text-gray-400 hover:text-white transition-colors">
-                Pricing
-              </Link>
-              <Link href="https://seeker.snapsnap.site/" target="_blank" className="text-gray-400 hover:text-white transition-colors">
-                Product
-              </Link>
+            <div className="flex flex-col gap-2 items-center sm:items-end">
+              <p className="text-sm text-gray-400">
+                Contact us: <a href="mailto:xdylanlong@gmail.com" className="text-cyan-400 hover:text-cyan-300">xdylanlong@gmail.com</a>
+              </p>
+              <p className="text-sm text-gray-400">
+                © 2024 SnapSeeker. All rights reserved.
+              </p>
             </div>
           </div>
         </div>
