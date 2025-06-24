@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import * as React from "react"
 import Link from "next/link"
@@ -74,24 +74,7 @@ export default function HomePage() {
     });
   };
   
-  // Test function to verify Analytics is working
-  const handleTestAnalytics = () => {
-    console.log('Testing Analytics...');
-    if (typeof window !== 'undefined' && window.dataLayer) {
-      console.log('DataLayer exists:', window.dataLayer);
-      // 使用统一的事件跟踪函数
-      import('@/lib/analytics').then(({ trackEvent }) => {
-        trackEvent('test_event', {
-          test_data: 'Analytics is working!',
-          source: 'manual_test'
-        });
-      });
-      alert('Analytics测试事件已发送！请检查浏览器控制台和GTM调试工具。');
-    } else {
-      console.error('DataLayer not found!');
-      alert('DataLayer未找到！GTM可能没有正确加载。');
-    }
-  };
+
   
   return (
     <div className="min-h-screen">
@@ -113,15 +96,6 @@ export default function HomePage() {
               SnapSeeker 快速帮你完善你的想法和PRD，并提供给你agent上下文和约束，帮你快速验证你的想法。
             </p>
             
-            {/* GTM Test Button */}
-            <div className="mb-6">
-              <Button 
-                onClick={handleTestAnalytics}
-                className="mb-4 px-6 py-3 text-sm bg-red-600 hover:bg-red-700"
-              >
-                🧪 测试Analytics (开发用)
-              </Button>
-            </div>
             
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
@@ -288,47 +262,25 @@ export default function HomePage() {
           </div>
           
           <div className="mx-auto max-w-4xl">
-            <div 
-              className="overflow-hidden relative bg-gray-800 rounded-lg border border-gray-700 aspect-video cursor-pointer hover:border-cyan-500/50 transition-colors"
-              onClick={() => {
-                trackDemoInteraction({
-                  demoType: 'interactive',
-                  interactionType: 'play',
-                  demoDuration: 0,
-                  completionPercentage: 0,
-                  userEngagementScore: 7,
-                  nextAction: 'pricing_page'
-                });
-                // Here you would typically open a modal or redirect to demo
-                alert('演示功能即将推出！');
-              }}
-            >
-              <div className="flex absolute inset-0 justify-center items-center">
-                <div className="text-center">
-                  <div className="flex justify-center items-center mx-auto mb-4 w-16 h-16 rounded-full bg-cyan-500/10">
-                    <svg className="w-8 h-8 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-300">点击播放产品演示视频</p>
-                </div>
-              </div>
-              
-              {/* Simulated interface preview */}
-              <div className="absolute inset-4 bg-gray-900 rounded border border-gray-600 opacity-50">
-                <div className="p-4">
-                  <div className="flex gap-2 items-center mb-4">
-                    <div className="w-3 h-3 bg-red-500 rounded-full" />
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                    <div className="w-3 h-3 bg-green-500 rounded-full" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="w-3/4 h-4 bg-gray-700 rounded" />
-                    <div className="w-1/2 h-4 bg-gray-700 rounded" />
-                    <div className="w-2/3 h-4 bg-gray-700 rounded" />
-                  </div>
-                </div>
-              </div>
+            <div className="overflow-hidden relative bg-gray-800 rounded-lg border border-gray-700 aspect-video">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/yLt7zT_yJCc?rel=0&modestbranding=1&showinfo=0"
+                title="SnapSeeker 产品演示视频"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                onLoad={() => {
+                  trackDemoInteraction({
+                    demoType: 'video',
+                    interactionType: 'load',
+                    demoDuration: 0,
+                    completionPercentage: 0,
+                    userEngagementScore: 5,
+                    nextAction: 'pricing_page'
+                  });
+                }}
+              />
             </div>
           </div>
         </div>
