@@ -7,12 +7,92 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Navigation } from "@/components/navigation"
 import { ArrowRight, CheckCircle, Users, TrendingUp, Zap, Target, BarChart3, Lightbulb } from "lucide-react"
+import { 
+  trackPageView, 
+  trackCTAClick, 
+  trackDemoInteraction, 
+  trackExternalProductAccess,
+  initScrollDepthTracking,
+  getDeviceType,
+  getUserType,
+  ANALYTICS_EVENTS
+} from "@/lib/analytics"
 
 /**
  * Home page component for SnapSeeker landing page
  * Features hero section, product value proposition, user cases, and demo
  */
 export default function HomePage() {
+  const [sessionStartTime] = React.useState(Date.now());
+  
+  React.useEffect(() => {
+    // Track page view
+    trackPageView({
+      pageTitle: 'SnapSeeker - Perfect Your Idea, Build Your PRD Fast',
+      pagePath: '/',
+      userType: getUserType(),
+      trafficSource: document.referrer || 'direct',
+      deviceType: getDeviceType()
+    });
+    
+    // Initialize scroll depth tracking
+    const cleanup = initScrollDepthTracking('landing');
+    
+    return cleanup;
+  }, []);
+  
+  const handleCTAClick = (ctaText: string, ctaType: 'primary' | 'secondary', pageSection: string, destinationUrl: string) => {
+    console.log('CTA Click triggered:', { ctaText, ctaType, pageSection, destinationUrl });
+    trackCTAClick({
+      ctaText,
+      ctaType,
+      pageSection: pageSection as 'hero' | 'features' | 'pricing' | 'footer',
+      destinationUrl,
+      conversionIntent: ctaType === 'primary' ? 'high' : 'medium'
+    });
+  };
+  
+  const handleExternalProductAccess = (sourcePage: string, accessMethod: string, userIntent: string) => {
+    console.log('External Product Access triggered:', { sourcePage, accessMethod, userIntent });
+    trackExternalProductAccess({
+      sourcePage: sourcePage as 'homepage' | 'pricing' | 'demo',
+      accessMethod: accessMethod as 'cta_button' | 'pricing_plan' | 'navigation',
+      userIntent: userIntent as 'trial' | 'purchase' | 'exploration',
+      sessionDurationBeforeJump: Date.now() - sessionStartTime
+    });
+  };
+  
+  const handleDemoClick = () => {
+    console.log('Demo Click triggered');
+    trackDemoInteraction({
+      demoType: 'video',
+      interactionType: 'play',
+      demoDuration: 0,
+      completionPercentage: 0,
+      userEngagementScore: 5,
+      nextAction: 'pricing_page'
+    });
+  };
+  
+  // Test function to verify Analytics is working
+  const handleTestAnalytics = () => {
+    console.log('Testing Analytics...');
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      console.log('DataLayer exists:', window.dataLayer);
+      // 使用统一的事件跟踪函数
+      import('@/lib/analytics').then(({ trackEvent }) => {
+        trackEvent('test_event', {
+          test_data: 'Analytics is working!',
+          source: 'manual_test'
+        });
+      });
+      alert('Analytics测试事件已发送！请检查浏览器控制台和GTM调试工具。');
+    } else {
+      console.error('DataLayer not found!');
+      alert('DataLayer未找到！GTM可能没有正确加载。');
+    }
+  };
+  
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -32,14 +112,42 @@ export default function HomePage() {
             <p className="mb-8 text-xl text-gray-300 sm:text-2xl">
               SnapSeeker 快速帮你完善你的想法和PRD，并提供给你agent上下文和约束，帮你快速验证你的想法。
             </p>
+            
+            {/* GTM Test Button */}
+            <div className="mb-6">
+              <Button 
+                onClick={handleTestAnalytics}
+                className="mb-4 px-6 py-3 text-sm bg-red-600 hover:bg-red-700"
+              >
+                🧪 测试Analytics (开发用)
+              </Button>
+            </div>
+            
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="px-8 py-6 w-full text-lg text-black bg-cyan-500 hover:bg-cyan-400 sm:w-auto">
+                <Button 
+                  size="lg" 
+                  className="px-8 py-6 w-full text-lg text-black bg-cyan-500 hover:bg-cyan-400 sm:w-auto"
+                  onClick={() => {
+                    handleCTAClick('立即体验产品', 'primary', 'hero', 'https://seeker.snapsnap.site/');
+                    handleExternalProductAccess('homepage', 'cta_button', 'trial');
+                  }}
+                >
                   立即体验产品
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </a>
-              <Button size="lg" variant="outline" className="px-8 py-6 text-lg text-white border-gray-600 hover:bg-gray-800">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="px-8 py-6 text-lg text-white border-gray-600 hover:bg-gray-800"
+                onClick={() => {
+                  handleCTAClick('观看演示', 'secondary', 'hero', '#demo');
+                  handleDemoClick();
+                  // Scroll to demo section
+                  document.querySelector('#demo-section')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 观看演示
               </Button>
             </div>
@@ -168,7 +276,7 @@ export default function HomePage() {
       </section>
 
       {/* Demo Section */}
-      <section className="py-20 lg:py-32">
+      <section id="demo-section" className="py-20 lg:py-32">
         <div className="container px-4 mx-auto">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
@@ -180,7 +288,21 @@ export default function HomePage() {
           </div>
           
           <div className="mx-auto max-w-4xl">
-            <div className="overflow-hidden relative bg-gray-800 rounded-lg border border-gray-700 aspect-video">
+            <div 
+              className="overflow-hidden relative bg-gray-800 rounded-lg border border-gray-700 aspect-video cursor-pointer hover:border-cyan-500/50 transition-colors"
+              onClick={() => {
+                trackDemoInteraction({
+                  demoType: 'interactive',
+                  interactionType: 'play',
+                  demoDuration: 0,
+                  completionPercentage: 0,
+                  userEngagementScore: 7,
+                  nextAction: 'pricing_page'
+                });
+                // Here you would typically open a modal or redirect to demo
+                alert('演示功能即将推出！');
+              }}
+            >
               <div className="flex absolute inset-0 justify-center items-center">
                 <div className="text-center">
                   <div className="flex justify-center items-center mx-auto mb-4 w-16 h-16 rounded-full bg-cyan-500/10">
@@ -224,13 +346,27 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="px-8 py-6 w-full text-lg text-black bg-cyan-500 hover:bg-cyan-400 sm:w-auto">
+                <Button 
+                  size="lg" 
+                  className="px-8 py-6 w-full text-lg text-black bg-cyan-500 hover:bg-cyan-400 sm:w-auto"
+                  onClick={() => {
+                    handleCTAClick('立即体验产品', 'primary', 'footer', 'https://seeker.snapsnap.site/');
+                    handleExternalProductAccess('homepage', 'cta_button', 'trial');
+                  }}
+                >
                   立即体验产品
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </a>
               <Link href="/pricing">
-                <Button size="lg" variant="outline" className="px-8 py-6 w-full text-lg text-white border-gray-600 hover:bg-gray-800">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="px-8 py-6 w-full text-lg text-white border-gray-600 hover:bg-gray-800"
+                  onClick={() => {
+                    handleCTAClick('查看定价方案', 'secondary', 'footer', '/pricing');
+                  }}
+                >
                   查看定价方案
                 </Button>
               </Link>

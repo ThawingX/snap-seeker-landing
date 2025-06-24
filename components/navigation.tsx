@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Globe } from "lucide-react"
+import { trackCTAClick, trackExternalProductAccess } from "@/lib/analytics"
 
 /**
  * Navigation component for the SnapSeeker landing page
@@ -14,6 +15,24 @@ import { Globe } from "lucide-react"
 export function Navigation() {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+  const [sessionStartTime] = React.useState(Date.now())
+  
+  const handleCTAClick = (buttonText: string) => {
+    trackCTAClick({
+      ctaText: buttonText,
+      ctaType: 'primary',
+      pageSection: 'header',
+      destinationUrl: 'https://seeker.snapsnap.site/',
+      conversionIntent: 'high'
+    });
+    
+    trackExternalProductAccess({
+      sourcePage: pathname.includes('/pricing') ? 'pricing' : 'homepage',
+      accessMethod: 'navigation',
+      userIntent: 'trial',
+      sessionDurationBeforeJump: Date.now() - sessionStartTime
+    });
+  };
   
   // Determine if we're on English pages
   const isEnglish = pathname.startsWith('/en')
@@ -74,6 +93,7 @@ export function Navigation() {
               <Button 
                 className="bg-cyan-500 text-black hover:bg-cyan-400"
                 size="sm"
+                onClick={() => handleCTAClick(isEnglish ? 'Try Now' : '立即体验')}
               >
                 {isEnglish ? 'Try Now' : '立即体验'}
               </Button>
@@ -137,7 +157,10 @@ export function Navigation() {
                 <Button 
                   className="bg-cyan-500 text-black hover:bg-cyan-400 w-full"
                   size="sm"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleCTAClick(isEnglish ? 'Try Now' : '立即体验');
+                  }}
                 >
                   {isEnglish ? 'Try Now' : '立即体验'}
                 </Button>

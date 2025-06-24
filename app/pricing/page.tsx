@@ -6,12 +6,92 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Navigation } from "@/components/navigation"
 import { Check, Star, Zap, Crown, Rocket } from "lucide-react"
+import { 
+  trackPageView, 
+  trackPricingPlanClick, 
+  trackCTAClick, 
+  trackExternalProductAccess,
+  initScrollDepthTracking,
+  getDeviceType,
+  getUserType
+} from "@/lib/analytics"
 
 /**
  * Pricing page component for SnapSeeker
  * Features different pricing tiers with one-time payment options
  */
 export default function PricingPage() {
+  const [sessionStartTime] = React.useState(Date.now());
+  
+  React.useEffect(() => {
+    // Track page view
+    trackPageView({
+      pageTitle: 'SnapSeeker - 定价方案',
+      pagePath: '/pricing',
+      userType: getUserType(),
+      trafficSource: document.referrer || 'direct',
+      deviceType: getDeviceType()
+    });
+    
+    // Initialize scroll depth tracking
+    const cleanup = initScrollDepthTracking('pricing');
+    
+    return cleanup;
+  }, []);
+  
+  const handlePricingPlanClick = (plan: any) => {
+    const planTypeMap: Record<string, 'trial' | 'credits' | 'premium' | 'monthly' | 'quarterly' | 'yearly'> = {
+      '体验版': 'trial',
+      '积分包': 'credits',
+      '高级扩展': 'premium',
+      '月度套餐': 'monthly',
+      '季度套餐': 'quarterly',
+      '年度套餐': 'yearly'
+    };
+    
+    const planCategoryMap: Record<string, 'one_time' | 'subscription'> = {
+      '体验版': 'one_time',
+      '积分包': 'one_time',
+      '高级扩展': 'subscription',
+      '月度套餐': 'subscription',
+      '季度套餐': 'subscription',
+      '年度套餐': 'subscription'
+    };
+    
+    trackPricingPlanClick({
+      planType: planTypeMap[plan.name],
+      planName: plan.name,
+      planPrice: plan.price,
+      planCategory: planCategoryMap[plan.name],
+      clickLocation: 'pricing_page',
+      creditsIncluded: plan.name === '积分包' ? '100' : undefined
+    });
+    
+    trackExternalProductAccess({
+      sourcePage: 'pricing',
+      accessMethod: 'pricing_plan',
+      userIntent: plan.name === '体验版' ? 'trial' : 'purchase',
+      sessionDurationBeforeJump: Date.now() - sessionStartTime,
+      planSelected: plan.name
+    });
+  };
+  
+  const handleCTAClick = (ctaText: string, destinationUrl: string) => {
+    trackCTAClick({
+      ctaText,
+      ctaType: 'primary',
+      pageSection: 'footer',
+      destinationUrl,
+      conversionIntent: 'high'
+    });
+    
+    trackExternalProductAccess({
+      sourcePage: 'pricing',
+      accessMethod: 'cta_button',
+      userIntent: 'trial',
+      sessionDurationBeforeJump: Date.now() - sessionStartTime
+    });
+  };
   const firstRowPlans = [
     {
       name: "体验版",
@@ -214,6 +294,7 @@ export default function PricingPage() {
                         }`}
                         variant={plan.buttonVariant}
                         size="lg"
+                        onClick={() => handlePricingPlanClick(plan)}
                       >
                         {plan.buttonText}
                       </Button>
@@ -288,6 +369,7 @@ export default function PricingPage() {
                         }`}
                         variant={plan.buttonVariant}
                         size="lg"
+                        onClick={() => handlePricingPlanClick(plan)}
                       >
                         {plan.buttonText}
                       </Button>
@@ -453,7 +535,11 @@ export default function PricingPage() {
               选择最适合您的方案，立即开始体验强大的产品搜索功能。
             </p>
             <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="px-8 py-6 text-lg text-black bg-cyan-500 hover:bg-cyan-400">
+              <Button 
+                size="lg" 
+                className="px-8 py-6 text-lg text-black bg-cyan-500 hover:bg-cyan-400"
+                onClick={() => handleCTAClick('立即开始体验', 'https://seeker.snapsnap.site/')}
+              >
                 立即开始体验
               </Button>
             </a>
