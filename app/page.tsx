@@ -125,6 +125,25 @@ export default function HomePage() {
                 观看演示
               </Button>
             </div>
+            
+            {/* Product Hunt Badge */}
+            <div className="flex justify-center mt-8">
+              <a 
+                href="https://www.producthunt.com/products/snapseeker?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-snapseeker" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="transition-transform hover:scale-105"
+              >
+                <img 
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=982626&theme=light&t=1750783108447" 
+                  alt="SnapSeeker - Get your MVP right, find your PMF fast. | Product Hunt" 
+                  style={{width: '250px', height: '54px'}} 
+                  width="250" 
+                  height="54" 
+                  className="rounded-lg shadow-lg"
+                />
+              </a>
+            </div>
           </div>
         </div>
         
