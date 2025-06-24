@@ -19,11 +19,11 @@ export function Navigation() {
   
   const handleCTAClick = (buttonText: string) => {
     trackCTAClick({
-      ctaText: buttonText,
-      ctaType: 'primary',
-      pageSection: 'header',
-      destinationUrl: 'https://seeker.snapsnap.site/',
-      conversionIntent: 'high'
+      cta_text: buttonText,
+      cta_type: 'primary',
+      page_section: 'hero',
+      destination_url: 'https://seeker.snapsnap.site/',
+      conversion_intent: 'high'
     });
     
     trackExternalProductAccess({
@@ -53,11 +53,11 @@ export function Navigation() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+      <div className="container px-4 mx-auto">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500">
+            <div className="flex justify-center items-center w-8 h-8 bg-cyan-500 rounded-lg">
               <span className="text-sm font-bold text-black">S</span>
             </div>
             <span className="text-xl font-bold text-white">SnapSeeker</span>
@@ -104,7 +104,7 @@ export function Navigation() {
             
             <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer">
               <Button 
-                className="bg-cyan-500 text-black hover:bg-cyan-400"
+                className="text-black bg-cyan-500 hover:bg-cyan-400"
                 size="sm"
                 onClick={() => handleCTAClick(isEnglish ? 'Try Now' : '立即体验')}
               >
@@ -138,7 +138,7 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="border-t border-gray-800 py-4 md:hidden">
+          <div className="py-4 border-t border-gray-800 md:hidden">
             <div className="flex flex-col space-y-4">
               {navigationItems.map((item) => (
                 <Link
@@ -182,7 +182,7 @@ export function Navigation() {
               
               <a href="https://seeker.snapsnap.site/" target="_blank" rel="noopener noreferrer" className="w-full">
                 <Button 
-                  className="bg-cyan-500 text-black hover:bg-cyan-400 w-full"
+                  className="w-full text-black bg-cyan-500 hover:bg-cyan-400"
                   size="sm"
                   onClick={() => {
                     setIsMobileMenuOpen(false);

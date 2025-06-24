@@ -44,11 +44,11 @@ export default function HomePage() {
   const handleCTAClick = (ctaText: string, ctaType: 'primary' | 'secondary', pageSection: string, destinationUrl: string) => {
     console.log('CTA Click triggered:', { ctaText, ctaType, pageSection, destinationUrl });
     trackCTAClick({
-      ctaText,
-      ctaType,
-      pageSection: pageSection as 'hero' | 'features' | 'pricing' | 'footer',
-      destinationUrl,
-      conversionIntent: ctaType === 'primary' ? 'high' : 'medium'
+      cta_text: ctaText,
+      cta_type: ctaType,
+      page_section: pageSection as 'hero' | 'features' | 'pricing' | 'footer',
+      destination_url: destinationUrl,
+      conversion_intent: ctaType === 'primary' ? 'high' : 'medium'
     });
   };
   
@@ -292,7 +292,7 @@ export default function HomePage() {
                 onLoad={() => {
                   trackDemoInteraction({
                     demoType: 'video',
-                    interactionType: 'load',
+                    interactionType: 'play',
                     demoDuration: 0,
                     completionPercentage: 0,
                     userEngagementScore: 5,

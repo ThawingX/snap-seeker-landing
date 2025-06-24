@@ -59,12 +59,12 @@ export default function PricingPage() {
     };
     
     trackPricingPlanClick({
-      planType: planTypeMap[plan.name],
-      planName: plan.name,
-      planPrice: plan.price,
-      planCategory: planCategoryMap[plan.name],
-      clickLocation: 'pricing_page',
-      creditsIncluded: plan.name === '积分包' ? '100' : undefined
+      plan_type: planTypeMap[plan.name],
+      plan_name: plan.name,
+      plan_price: plan.price,
+      plan_category: planCategoryMap[plan.name],
+      click_location: 'pricing_page',
+      credits_included: plan.name === '积分包' ? '100' : undefined
     });
     
     trackExternalProductAccess({
@@ -78,11 +78,11 @@ export default function PricingPage() {
   
   const handleCTAClick = (ctaText: string, destinationUrl: string) => {
     trackCTAClick({
-      ctaText,
-      ctaType: 'primary',
-      pageSection: 'footer',
-      destinationUrl,
-      conversionIntent: 'high'
+      cta_text: ctaText,
+      cta_type: 'primary',
+      page_section: 'footer',
+      destination_url: destinationUrl,
+      conversion_intent: 'high'
     });
     
     trackExternalProductAccess({

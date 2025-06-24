@@ -232,8 +232,6 @@ export const trackPageView = (params: {
 export const trackGoogleLogin = (params: GoogleLoginParams) => {
   trackEvent(ANALYTICS_EVENTS.GOOGLE_LOGIN, {
     action: 'click',
-    method: params.method,
-    page: params.page,
     ...params
   });
 };
@@ -244,10 +242,6 @@ export const trackGoogleLogin = (params: GoogleLoginParams) => {
 export const trackCTAClick = (params: CTAClickParams) => {
   trackEvent(ANALYTICS_EVENTS.CTA_CLICK, {
     action: 'click',
-    cta_text: params.cta_text,
-    cta_type: params.cta_type,
-    page_section: params.page_section,
-    destination_url: params.destination_url,
     conversion_intent: params.conversion_intent || 'medium',
     ...params
   });
@@ -259,11 +253,6 @@ export const trackCTAClick = (params: CTAClickParams) => {
 export const trackPricingPlanClick = (params: PricingPlanClickParams) => {
   trackEvent(ANALYTICS_EVENTS.PRICING_PLAN_CLICK, {
     action: 'click',
-    plan_type: params.plan_type,
-    plan_name: params.plan_name,
-    plan_price: params.plan_price,
-    plan_category: params.plan_category,
-    click_location: params.click_location,
     ...(params.credits_included && { credits_included: params.credits_included }),
     ...params
   });
@@ -275,8 +264,6 @@ export const trackPricingPlanClick = (params: PricingPlanClickParams) => {
 export const trackSearchSubmit = (params: SearchParams) => {
   trackEvent(ANALYTICS_EVENTS.SEARCH_SUBMIT, {
     action: 'submit',
-    search_term: params.search_term,
-    results_count: params.results_count,
     ...params
   });
 };
